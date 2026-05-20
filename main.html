@@ -1,496 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Dark Knight</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --black: #0a0a0a;
-      --dark: #111111;
-      --card: #161616;
-      --gold: #c9a84c;
-      --gold-dim: #8a6d2f;
-      --red: #9b1c1c;
-      --white: #f0ece3;
-      --muted: #888880;
-      --border: rgba(201,168,76,0.18);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background-color: var(--black);
-      color: var(--white);
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.75;
-      overflow-x: hidden;
-    }
-
-    /* ── HEADER ── */
-    header {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 4rem 2rem 6rem;
-      overflow: hidden;
-      background: radial-gradient(ellipse at 50% 60%, #1a0a00 0%, #0a0a0a 70%);
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
-        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
-      pointer-events: none;
-    }
-
-    .bat-symbol {
-      font-size: 5rem;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 0 30px rgba(201,168,76,0.4));
-      animation: glow-pulse 3s ease-in-out infinite;
-    }
-
-    @keyframes glow-pulse {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(201,168,76,0.3)); }
-      50%       { filter: drop-shadow(0 0 50px rgba(201,168,76,0.7)); }
-    }
-
-    header h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 12vw, 9rem);
-      letter-spacing: 0.12em;
-      line-height: 0.95;
-      color: var(--white);
-      text-shadow:
-        0 0 80px rgba(201,168,76,0.25),
-        0 4px 30px rgba(0,0,0,0.8);
-      animation: fade-up 1.2s ease both;
-    }
-
-    header .subtitle {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(0.75rem, 2vw, 1rem);
-      letter-spacing: 0.35em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-top: 1.2rem;
-      animation: fade-up 1.4s ease both;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      color: var(--gold-dim);
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      animation: fade-up 2s ease both;
-    }
-    .scroll-hint::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--gold-dim), transparent);
-      animation: line-drop 2s ease-in-out infinite;
-    }
-    @keyframes line-drop {
-      0%   { transform: scaleY(0); transform-origin: top; }
-      50%  { transform: scaleY(1); transform-origin: top; }
-      51%  { transform: scaleY(1); transform-origin: bottom; }
-      100% { transform: scaleY(0); transform-origin: bottom; }
-    }
-
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
-      padding: 1.1rem 2rem;
-    }
-
-    nav a {
-      font-family: 'Cinzel', serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      position: relative;
-      padding-bottom: 4px;
-      transition: color 0.3s;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 1px;
-      background: var(--gold);
-      transition: width 0.35s ease;
-    }
-
-    nav a:hover { color: var(--gold); }
-    nav a:hover::after { width: 100%; }
-
-    /* ── LAYOUT ── */
-    .page-wrapper {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 2rem 6rem;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 4rem 0 2.5rem;
-      color: var(--gold);
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── SUMMARY ── */
-    .summary-section {
-      padding: 3rem 0 2rem;
-    }
-
-    .summary-section p {
-      font-size: 1.15rem;
-      color: #c8c4bb;
-      max-width: 720px;
-      margin: 0 auto;
-      text-align: center;
-      font-style: italic;
-    }
-
-    /* ── SECTIONS ── */
-    section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 2.5rem 3rem;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    section::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: linear-gradient(to bottom, var(--gold), var(--gold-dim));
-    }
-
-    section h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── ACTORS ── */
-    .actor-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .actor-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      border-radius: 2px;
-      transition: border-color 0.3s, background 0.3s;
-    }
-
-    .actor-card:hover {
-      border-color: var(--gold-dim);
-      background: rgba(201,168,76,0.05);
-    }
-
-    .actor-card .role {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-    }
-
-    .actor-card .actor-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .actor-card .character {
-      font-style: italic;
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: 0.2rem;
-    }
-
-    /* ── QUOTE ── */
-    #quote blockquote {
-      font-size: 1.4rem;
-      font-style: italic;
-      color: var(--white);
-      border-left: none;
-      padding: 1.5rem 0 1rem;
-      line-height: 1.6;
-      position: relative;
-    }
-
-    #quote blockquote::before {
-      content: '\201C';
-      font-size: 6rem;
-      color: var(--gold);
-      opacity: 0.2;
-      position: absolute;
-      top: -1.5rem;
-      left: -1rem;
-      font-family: Georgia, serif;
-      line-height: 1;
-      pointer-events: none;
-    }
-
-    #quote .quote-attr {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-      margin-top: 0.5rem;
-    }
-
-    #quote p {
-      color: #c8c4bb;
-      margin-top: 1.2rem;
-      font-size: 0.98rem;
-    }
-
-    /* ── ASIDE ── */
-    aside {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin: 2rem 0;
-    }
-
-    .aside-block {
-      background: var(--card);
-      padding: 2rem 2.5rem;
-      text-align: center;
-    }
-
-    .aside-block .label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    .aside-block .value {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      letter-spacing: 0.05em;
-      color: var(--white);
-    }
-
-    .aside-block .sub {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.3rem;
-      font-style: italic;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 3rem 2rem;
-      text-align: center;
-      background: var(--dark);
-    }
-
-    footer .produced {
-      font-family: 'Cinzel', serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.35em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-    }
-
-    footer .produced span {
-      color: var(--gold);
-    }
-
-    footer .copyright {
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-style: italic;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      section { padding: 2rem 1.5rem; }
-      aside { grid-template-columns: 1fr; }
-      nav { gap: 2rem; }
-    }
-  </style>
+	<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="bat-symbol">🦇</div>
-    <h1>The Dark Knight</h1>
-    <p class="subtitle">Christopher Nolan &nbsp;·&nbsp; 2008</p>
-    <div class="scroll-hint">Scroll</div>
-  </header>
-
-  <!-- NAV -->
-  <nav>
-    <a id="nav-actor" href="#actor">Actors</a>
-    <a id="nav-quote" href="#quote">Quotes</a>
-  </nav>
-
-  <div class="page-wrapper">
-
-    <!-- SUMMARY -->
-    <div class="summary-section">
-      <div class="divider">Synopsis</div>
-      <p>
-        When the Joker — a sadistic agent of chaos — emerges from Gotham's criminal underworld,
-        Batman must confront the darkest impulses of the city he swore to protect. With the fate
-        of Gotham's soul hanging on the choices of its heroes, the line between justice and
-        vigilantism begins to dissolve.
-      </p>
-    </div>
-
-    <!-- ACTORS SECTION -->
-    <div class="divider">Cast</div>
-    <section id="actor">
-      <h2>The Cast</h2>
-      <div class="actor-grid">
-        <div class="actor-card">
-          <div class="role">Lead Role</div>
-          <div class="actor-name">Christian Bale</div>
-          <div class="character">Bruce Wayne / Batman</div>
-        </div>
-        <div class="actor-card">
-          <div class="role">Villain</div>
-          <div class="actor-name">Heath Ledger</div>
-          <div class="character">The Joker</div>
-        </div>
-        <div class="actor-card">
-          <div class="role">District Attorney</div>
-          <div class="actor-name">Aaron Eckhart</div>
-          <div class="character">Harvey Dent / Two-Face</div>
-        </div>
-        <div class="actor-card">
-          <div class="role">Support</div>
-          <div class="actor-name">Michael Caine</div>
-          <div class="character">Alfred Pennyworth</div>
-        </div>
-        <div class="actor-card">
-          <div class="role">Support</div>
-          <div class="actor-name">Gary Oldman</div>
-          <div class="character">Commissioner Gordon</div>
-        </div>
-        <div class="actor-card">
-          <div class="role">Support</div>
-          <div class="actor-name">Morgan Freeman</div>
-          <div class="character">Lucius Fox</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUOTE SECTION -->
-    <div class="divider">Memorable Quote</div>
-    <section id="quote">
-      <h2>Famous Quote</h2>
-      <blockquote>
-        "Why so serious?"
-      </blockquote>
-      <div class="quote-attr">— The Joker, portrayed by Heath Ledger</div>
-      <p>
-        Perhaps the most iconic line in modern cinema, the Joker's taunting question encapsulates
-        his entire philosophy — that life's tragedies are better met with a smile, and that
-        the veneer of civilisation is thinner than anyone dares to admit.
-      </p>
-    </section>
-
-    <!-- ASIDE -->
-    <div class="divider">Film Details</div>
-    <aside>
-      <div class="aside-block">
-        <div class="label">IMDb Rating</div>
-        <div class="value">9.0</div>
-        <div class="sub">out of 10 &nbsp;·&nbsp; 2.9M votes</div>
-      </div>
-      <div class="aside-block">
-        <div class="label">Release Date</div>
-        <div class="value">July 18</div>
-        <div class="sub">2008 &nbsp;·&nbsp; Warner Bros.</div>
-      </div>
-    </aside>
-
-  </div><!-- /page-wrapper -->
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="produced">Produced by: <span>Christopher Nolan &amp; Emma Thomas</span></div>
-    <div class="copyright">© 2008 Warner Bros. Entertainment Inc. — Fan tribute page.</div>
-  </footer>
+	<!-- the entire body must be written by student -->
+	<head>
+		<h1>The Dark Knight</h1>
+		<nav>
+			<a href="#actor" id="nav-actor">Actor</a>
+			<a href="#quote" id="nav-quote">Quote</a>
+		</nav>
+	</head>
+	<section>
+		<p> <b>Summary:</b>Batman faces his greatest threat yet when the Joker, a chaotic criminal mastermind, unleashes a reign of terror on Gotham City. The Joker's goal isn't money or power — he wants to prove that anyone can be driven to madness and evil, given the right push.
+			Meanwhile, idealistic district attorney Harvey Dent rises as Gotham's "White Knight," the city's hope for justice. As Batman and Dent team up to take down the mob, the Joker systematically dismantles everything Bruce Wayne holds dear — forcing Batman to make impossible moral choices.
+			Ultimately, Harvey Dent is broken by tragedy and transforms into the villain Two-Face, leaving Batman to take the blame for his crimes — sacrificing his own reputation to preserve Gotham's hope. Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vel harum et quo non nostrum sequi corporis a soluta
+  reiciendis, distinctio voluptas ut eveniet aliquid pariatur cumque. Dolorem repellendus rem eius tempore minus
+  voluptates qui eum ut sequi velit! Laboriosam quos impedit eos! Possimus tempore voluptate quas id quod odio
+  consequuntur quasi porro, explicabo a cumque velit, animi reprehenderit quis atque, expedita veritatis? Ipsum, quod
+  error, iure odit optio fugit quam libero soluta sint eveniet accusantium harum perferendis ut? Rem recusandae vitae
+  rerum voluptas, blanditiis id quam culpa est excepturi tempore magni nostrum qui maxime et nesciunt. Obcaecati culpa
+  eaque minus blanditiis reprehenderit eos harum nam, tempora iste, ipsum fuga doloremque dolore repellat vitae
+  dignissimos suscipit amet dolor voluptates id neque similique dolores. Excepturi natus impedit rem accusantium eius
+  aliquid quod labore similique laudantium id eos, culpa error, voluptatem molestias voluptas ipsa quis voluptate soluta
+  dolor repellendus voluptatibus, illo voluptates. Saepe harum non voluptas consectetur minus est, perferendis culpa
+  numquam quos odit aut molestias ex et tempora. Blanditiis quae eius itaque modi non nesciunt magnam tempora deleniti
+  commodi, cupiditate, quia dolor quisquam cumque aliquam, voluptatibus natus voluptate repellendus voluptates velit
+  temporibus. Recusandae voluptatem quidem vitae totam vel molestiae ducimus, eligendi rem placeat excepturi. Porro
+  dolor nisi cum obcaecati nostrum nulla maxime facere, impedit eius, iste iure. Error quas sit, maxime hic dicta id
+  ipsam! Nam nihil, optio dignissimos ab temporibus labore deleniti sint omnis unde magnam obcaecati, quisquam maiores
+  ipsum repudiandae ut in cum recusandae consequuntur, totam mollitia delectus voluptate doloribus eius. Quia, facilis
+  quas repudiandae provident perferendis consectetur odio doloribus nam accusantium aut quo pariatur praesentium ipsa ea
+  exercitationem dolores placeat odit commodi harum! Doloribus, minus. Obcaecati est quod neque maxime ex ab non
+  laboriosam quo eos provident commodi eveniet minima magnam quasi illum iure doloribus dolorum iste facilis, totam
+  labore accusantium natus. Labore, vitae dolorem? Distinctio, sed saepe. Nesciunt ipsum porro quae cumque tenetur,
+  iusto tempore perspiciatis hic eveniet labore voluptatibus quod minima quisquam saepe mollitia quidem? Reprehenderit
+  numquam eos consequuntur! Sunt, quas doloribus! Harum porro illo eos voluptate voluptatum inventore et officia quos,
+  minus quod sint unde minima nisi ratione fugiat error aliquid vero mollitia amet tempora doloremque quibusdam
+  consectetur accusantium. Fuga deserunt, accusantium similique animi laborum pariatur consequatur vero architecto
+  assumenda aliquid. Quis distinctio dicta cumque, fuga quidem rerum a. Nobis, dolor consectetur temporibus aliquid
+  error sequi sit odit magni quod repellendus deserunt quaerat accusamus soluta ad autem voluptatum cumque facere
+  laboriosam eveniet harum distinctio esse earum perferendis! Fuga quis esse, itaque eaque enim voluptatem excepturi,
+  sunt eos inventore labore accusamus eum ipsam neque deserunt minima dolorum atque odit non ut cum. Harum laudantium
+  dolorum facere voluptate! Quae culpa veritatis animi illo necessitatibus nam praesentium nisi harum soluta error
+  voluptate ipsum quaerat rem, deserunt nostrum, eos omnis temporibus. Hic illum necessitatibus esse. Repellendus modi,
+  aut mollitia perspiciatis veniam earum quasi impedit ex iure soluta ducimus porro eos? Consequatur et natus officia,
+  porro molestias atque beatae repudiandae facere ipsum ea dolor at
+		</p>
+		<p id="actor"><b>Actors:</b> Christian Bale, Heath Ledger, Aaron Eckhart</p>
+		<p id="quote"><b>Quote:</b> "Why so serious?" — The Joker</p>
+		<div>
+			<p> <b>IMDb:</b> 9.0/10 </p>
+			<p><b>Released Date:</b> July 18, 2008</p>
+		</div>
+	</section>
+	<footer>
+		<p><b>Produse by </b>: Christopher Nolan</p>
+	</footer>
+    <script type="text/javascript" src="./script.js">
+		
+</script>
 
 </body>
+
 </html>
