@@ -1,2 +1,30 @@
 
 /* Your CSS Code here. */
+#body{
+	background-color:yellow 
+}
+
+
+#title{
+	color:blue;
+	font-size:60px;
+	text-align:center;
+}
+
+#navbar{
+	color:black;
+	background-color:red;
+	font-size:20px;
+	textarea:center;
+	text-align:center;
+}
+
+#pera{
+	margin-right:20px;
+	color:black;
+}
+.bold{
+	color:red;
+	font-family:bold;
+	font-size:20px
+}
